@@ -1,0 +1,281 @@
+:root {
+    --container-size: 250px;
+    --widget-size: 30px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    background-color: #cccccc;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.half-circle {
+    margin: calc(var(--container-size)*0.1) auto;
+    text-align: center;
+    width: var(--container-size);
+    height: calc(var(--container-size) * 0.5);
+    border-radius: var(--container-size) var(--container-size) 0 0;
+    border: 2px dotted #333;
+    border-bottom: none;
+    position: relative;
+}
+
+.half-circle::before {
+    content: attr(name);
+    position: relative;
+    top: 110%;
+}
+
+
+.dashboard-center {
+    --dashboard-angle: -90deg;
+    width: calc(var(--widget-size) * 0.5);
+    height: calc(var(--widget-size) * 0.5);
+    border-radius: 50%;
+    border: 2px solid #333;
+    background: black;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    translate: -50% -50%;
+    rotate: var(--dashboard-angle);
+    transition: rotate 0.5s ease-in-out;
+}
+
+.arrow {
+    position: absolute;
+    border-radius: 100px;
+    width: calc(var(--widget-size) *0.5 - 4px);
+    height: calc(var(--container-size) * 0.4);
+    background: rgb(76, 76, 76);
+    translate: 0 calc(-100% + var(--widget-size) *0.5 - 4px);
+
+}
+
+.arrow::before {
+    content: '';
+    width: 10;
+    height: 10;
+    border-left: calc(var(--widget-size) * 0.5) solid transparent;
+    border-right: calc(var(--widget-size) * 0.5) solid transparent;
+    border-bottom: calc(var(--widget-size) * 1.5) solid rgb(76, 76, 76);
+    position: absolute;
+    translate: -50% -50%;
+}
+
+
+.dashed-circle {
+    margin: calc(var(--container-size)*0.15) auto;
+    width: var(--container-size);
+    height: var(--container-size);
+    border-radius: 50%;
+    border: 2px dashed #333;
+    position: relative;
+}
+
+.dashed-circle>div {
+    position: absolute;
+    width: var(--widget-size);
+    height: var(--widget-size);
+    border-radius: 50%;
+    translate: -50% -50%;
+    border: 2px solid #333;
+    cursor: pointer;
+}
+
+.dashed-circle>div:nth-child(1) {
+    top: 50%;
+    left: 100%;
+}
+
+.dashed-circle>div:nth-child(2) {
+    top: calc(50% + 50% * 1.76 / 2);
+    left: calc(50% + 50% * 1.76 / 4);
+    ;
+}
+
+.dashed-circle>div:nth-child(3) {
+    top: calc(50% + 50% * 1.76 / 2);
+    left: calc(50% - 50% * 1.76 / 4);
+    ;
+}
+
+.dashed-circle>div:nth-child(4) {
+    top: 50%;
+}
+
+.dashed-circle>div:nth-child(5) {
+    top: calc(50% - 50% * 1.76 / 2);
+    left: calc(50% - 50% * 1.76 / 4);
+}
+
+.gray-bg {
+    background: gray;
+}
+
+.black-bg {
+    background: black;
+}
+
+.red-bg {
+    background: red;
+}
+
+.green-bg {
+    background: green;
+}
+
+.blue-bg {
+    background: rgb(0, 115, 255);
+}
+
+#knob-container {
+    width: calc(var(--widget-size) * 2);
+    height: 60px;
+    border-radius: 50%;
+    border: 5px solid #333;
+    top: 50%;
+    left: 50%;
+}
+
+#knob {
+    --knob-angle: 0deg;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    translate: -50% -50%;
+    rotate: var(--knob-angle);
+}
+.knob-animate-rotation{
+    transition: rotate 1s ease-in-out;
+}
+
+#knob::after {
+    content: '';
+    width: 5px;
+    height: 50%;
+    background: red;
+    position: absolute;
+    left: 50%;
+    translate: -50%;
+}
+
+.dashed-circle>div::before {
+    content: attr(name);
+    position: absolute;
+    white-space: nowrap;
+    translate: calc(var(--widget-size) * 1.1) calc(var(--widget-size) * -0.5);
+    width: 100%;
+    height: 100%;
+    text-align: right;
+}
+
+div[name="Light Sensor"]::before {
+    white-space: normal
+}
+
+.temperature-container {
+    margin: calc(var(--container-size)*0.05) auto;
+    height: var(--widget-size);
+    width: var(--container-size);
+    background: linear-gradient(to left, #F44336, #FF9800, #FFC107, #FFEB3B, #4ac3bb, #4aa3c3, #4a82c3);
+    border-radius: calc(var(--widget-size) * 0.5);
+    border: 2px solid #333;
+    position: relative;
+}
+
+
+.temperature-marker {
+    --marker-position: 45%;
+    height: 100%;
+    width: calc(var(--widget-size) * 0.2);
+    background: red;
+    border-radius: calc(var(--widget-size) * 0.2);
+    border: 1px solid #333;;
+    position: absolute;
+    translate: -50%;
+    left: calc(var(--marker-position));
+    transition: left 2s ease-in-out;
+}
+.temperature-container::before{
+    content: attr(name);
+    position: absolute;
+    white-space: nowrap;
+    top: -50%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+#light-sensor{
+    background: hsl(60, 100%, 0%);
+}
+
+#led2-color-chooser{
+    display: none;
+    width: fit-content;
+    height: fit-content;
+    background: #f0f0f0;
+    padding: 5px;
+    padding-bottom: calc(var(--widget-size) * 0.5);
+    border: solid 2px #333;
+    border-radius: 5px;
+    position: relative;
+    translate: calc(-50% + var(--widget-size) * 0.5 ) 50%;
+}
+.led2-color-chooser-item::before{
+    content: attr(name);
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.7em;
+    color:#333;
+    translate: -50% 100%;
+    text-align: center;
+    width: fit-content;
+    left:50%;
+
+}
+.led2-color-chooser-item:hover{
+    border: 2px solid #fff;
+
+}
+.led2-color-chooser-item{
+    width: var(--widget-size);
+    height: calc(var(--widget-size) * 0.5);
+    border-radius: 5px;
+    border: 2px solid #333;
+    display: inline-block;
+    margin: 0 3px;
+    cursor: pointer;
+    position: relative;
+
+}
+.led2-color-chooser-blue{
+    background: blue;
+}
+.led2-color-chooser-red{
+    background: red;
+}
+.led2-color-chooser-green{
+    background: green;
+}
+.led2-color-chooser-off{
+    background: gray;
+}

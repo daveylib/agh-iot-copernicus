@@ -1,6 +1,6 @@
 from utils.copernicus_observer import CopernicusObserver
 from utils.event_type import EventType
-from random import getrandbits
+from random import getrandbits, randint
 from typing import List
 import threading
 from time import sleep
@@ -17,8 +17,18 @@ class APICopernicus:
     def __subscription_handler(self):
         """Wait for update and parse it"""
         while self.__observer:
-            self.__observer.update(EventType.BUTTON1, getrandbits(1))
-            sleep(1)
+            x = randint(0, 4)
+            if x == 0:
+                self.__observer.update(EventType.BUTTON1, self.get_button1_state())
+            elif x == 1:
+                self.__observer.update(EventType.BUTTON2, self.get_button2_state())
+            elif x == 2:
+                self.__observer.update(EventType.KNOB, self.get_knob_position())
+            elif x == 3:
+                self.__observer.update(EventType.TEMPERATURE, self.get_temperature())
+            elif x == 4:
+                self.__observer.update(EventType.LIGHT, self.get_ambient_light())
+            sleep(3)
 
     def subscribe(self, events: List[EventType], observer: CopernicusObserver):
         """Subscribe to specific events performed on the board"""
@@ -28,6 +38,7 @@ class APICopernicus:
         self.__observer = observer
 
         self.__running_subscription = threading.Thread(target=self.__subscription_handler)
+        self.__running_subscription.daemon = True
         self.__running_subscription.start()
 
     def stop_subscribing(self):
@@ -46,7 +57,7 @@ class APICopernicus:
         if angle < 0 or angle > 31:
             raise Exception("Dashboard angle must be in range from 0 to 31")
 
-        return bool(getrandbits(1))
+        return True
 
     def set_led1_state(self, state: bool) -> bool:
         """
@@ -54,7 +65,7 @@ class APICopernicus:
 
         Return True if operation was successful, False otherwise
         """
-        return bool(getrandbits(1))
+        return True
 
     def set_led2_color(self, red: int, green: int, blue: int) -> bool:
         """
@@ -71,7 +82,7 @@ class APICopernicus:
         if blue < 0 or blue > 3:
             raise Exception("Blue color must be in range from 0 to 3")
 
-        return bool(getrandbits(1))
+        return True
 
     def get_ambient_light(self) -> int:
         """Return value of ambient light in range from 0 to 63"""
