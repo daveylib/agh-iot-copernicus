@@ -37,7 +37,7 @@ def start_server():
 
 
 if __name__ == '__main__':
-    app_controller = AppController()
+    app_controller = AppController("/dev/tty.usbmodem143401")
     start_server()
 
 

@@ -6,9 +6,9 @@ from time import sleep
 import eel
 
 class AppController(CopernicusObserver):
-    def __init__(self):
+    def __init__(self, serial_port: str):
         eel.init('web')
-        self.api = APICopernicus()
+        self.api = APICopernicus(serial_port)
         self.led1_state = False
         self.led2_color = [0, 0, 0]
         self.button1_state = False
@@ -22,23 +22,18 @@ class AppController(CopernicusObserver):
         self.api.set_led2_color(self.led2_color[0], self.led2_color[1], self.led2_color[2])
 
         self.forward_update = {
-            EventType.BUTTON1: self.__update_button1_state,
-            EventType.BUTTON2: self.__update_button2_state,
-            EventType.KNOB: self.__update_knob,
-            EventType.LIGHT: self.__update_light_sensor,
-            EventType.TEMPERATURE: self.__update_temperature
+            EventType.BUTTON1: self.api.get_button1_state(),
+            EventType.BUTTON2: self.api.get_button2_state(),
+            EventType.KNOB: self.api.get_knob_position(),
+            EventType.LIGHT: self.api.get_ambient_light(),
+            EventType.TEMPERATURE: self.api.get_temperature()
         }
-        self.forward_update[EventType.BUTTON1](self.api.get_button1_state())
-        self.forward_update[EventType.BUTTON2](self.api.get_button2_state())
-        self.forward_update[EventType.KNOB](self.api.get_knob_position())
-        self.forward_update[EventType.LIGHT](self.api.get_ambient_light())
-        self.forward_update[EventType.TEMPERATURE](self.api.get_temperature())
 
-        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.LIGHT, EventType.TEMPERATURE], self)
+        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.TEMPERATURE], self)
 
     def update(self, event_type: EventType, event_value: int) -> None:
         print(f"Getting event type {event_type} with value {event_value} directly in the app")
-        self.forward_update[event_type](event_value)
+        self.forward_update[event_type] = event_value
 
     def __update_light_sensor(self, value: int) -> None:
         print(f"Setting Light Sensor value to {value}")
