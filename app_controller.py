@@ -37,7 +37,7 @@ class AppController(CopernicusObserver):
         self.forward_update[EventType.TEMPERATURE](self.api.get_temperature())
         self.forward_update[EventType.MOTION](self.api.get_motion_state())
 
-        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.LIGHT, EventType.TEMPERATURE, EventType.MOTION], self)
+        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.MOTION], self)
 
     def update(self, event_type: EventType, event_value: int) -> None:
         print(f"Getting event type {event_type} with value {event_value} directly in the app")
@@ -103,9 +103,13 @@ class AppController(CopernicusObserver):
         self.api.set_dashboard_angle(angle)
 
     def __knob_handler(self, value: int) -> None:
-        self.dashboard_value = value // 2
-        self.api.set_dashboard_angle(self.dashboard_value)
-        eel.update_dashboard(self.dashboard_value / 31 * 180)
+        self.board_dashboard_value = int(value * 10 / 63 + 21)
+        self.api.set_dashboard_angle(self.board_dashboard_value)
+
+        print(f"board_dashboard_value: {self.board_dashboard_value}")
+
+        self.web_dashboard_value = (value // 2) / 31 * 180
+        eel.update_dashboard(self.web_dashboard_value)
     
     def knob_handler(self, value: int) -> bool:
         print(f"Knob change to {value}")
