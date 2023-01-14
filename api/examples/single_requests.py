@@ -1,6 +1,6 @@
 from api.api_copernicus import APICopernicus
 
-api = APICopernicus()
+api = APICopernicus("/dev/tty.usbmodem143401")
 
 print("Setting dashboard angle to 30")
 api.set_dashboard_angle(30)

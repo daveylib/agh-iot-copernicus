@@ -6,7 +6,7 @@ from time import sleep
 
 class App(CopernicusObserver):
     def __init__(self):
-        self.api = APICopernicus()
+        self.api = APICopernicus("/dev/tty.usbmodem143401")
 
         self.api.subscribe([EventType.BUTTON1], self)
 
