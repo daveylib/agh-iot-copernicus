@@ -1,4 +1,4 @@
-from api_copernicus import APICopernicus
+from api.api_copernicus import APICopernicus
 
 api = APICopernicus()
 

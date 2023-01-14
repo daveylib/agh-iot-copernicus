@@ -1,5 +1,5 @@
-from utils.copernicus_observer import CopernicusObserver
-from utils.event_type import EventType
+from api.utils.copernicus_observer import CopernicusObserver
+from api.utils.event_type import EventType
 from random import getrandbits, randint
 from typing import List
 import threading

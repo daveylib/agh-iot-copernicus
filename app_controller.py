@@ -1,7 +1,7 @@
 from threading import Thread
-from utils.copernicus_observer import CopernicusObserver
-from api_copernicus import APICopernicus
-from utils.event_type import EventType
+from api.utils.copernicus_observer import CopernicusObserver
+from api.api_copernicus import APICopernicus
+from api.utils.event_type import EventType
 from time import sleep
 import eel
 
