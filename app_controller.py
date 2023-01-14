@@ -106,8 +106,6 @@ class AppController(CopernicusObserver):
         self.board_dashboard_value = int(value * 10 / 63 + 21)
         self.api.set_dashboard_angle(self.board_dashboard_value)
 
-        print(f"board_dashboard_value: {self.board_dashboard_value}")
-
         self.web_dashboard_value = (value // 2) / 31 * 180
         eel.update_dashboard(self.web_dashboard_value)
     
