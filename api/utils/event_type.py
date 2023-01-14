@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class EventType(Enum):
     LIGHT = 1
     BUTTON1 = 2
