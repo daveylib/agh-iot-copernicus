@@ -7,7 +7,7 @@ const knob = document.getElementById('knob');
 const dashboard = document.getElementById('dashboard');
 const temperature = document.getElementById('temperature-marker');
 const led2_color_chooser = document.getElementById('led2-color-chooser');
-
+const motion_sensor = document.getElementById('motion-sensor');
 
 // Buttons
 btn1.addEventListener('mousedown', e=> {
@@ -81,7 +81,7 @@ led2_color_chooser.addEventListener('click', e=> {
 let knob_value = 0;
 let knob_value_rounded = 0;
 let starting_diff_angle = 0;
-const no_spins = 2;
+const knob_max_value = 320;
 const knob_center = {x: 0, y: 0}
 function getKnobAngle(e){
     if (e.clientX >= knob_center.x && e.clientY < knob_center.y)
@@ -138,10 +138,10 @@ function knob_move_handler(e) {
     if ((knob_value == 0 && diff > 30) ||(knob_value == 63 && diff < -30))
         return;
 
-    knob_value += diff * 63 / (360 * no_spins) ;
+    knob_value += diff * 63 / (knob_max_value) ;
     if (knob_value > 63){
         knob_value = 63;
-        knob.style.setProperty('--knob-angle',  (360*no_spins) + "deg");
+        knob.style.setProperty('--knob-angle',  knob_max_value + "deg");
         return
     }
     if (knob_value < 0){
@@ -150,7 +150,7 @@ function knob_move_handler(e) {
         return
     }
 
-    const angle =  knob_value / 63 * 360 * no_spins
+    const angle =  knob_value / 63 * knob_max_value
     knob.style.setProperty('--knob-angle',  angle + "deg");
     if (knob_value_rounded != Math.round(knob_value)){
         knob_value_rounded = Math.round(knob_value);
@@ -228,7 +228,7 @@ eel.expose(update_knob);
 function update_knob(value) {
     knob_value = value;
     knob_value_rounded = value;
-    const angle =  value / 63 * 360 * no_spins
+    const angle =  value / 63 * knob_max_value
     document.removeEventListener('mousemove', knob_move_handler);
     starting_diff_angle = 0;
     knob.classList.add('knob-animate-rotation');
@@ -253,6 +253,7 @@ function update_temperature(temp) {
     temperature.style.setProperty('--marker-position', temp + "%");
 }
 
+//light sensor
 eel.expose(update_light_sensor);
 function update_light_sensor(value){
     const min_value = 0;
@@ -264,6 +265,20 @@ function update_light_sensor(value){
         value = 0;
     else if (value > 100)
         value = 100;
-
+    value = 100 - value;
     light_sensor.style.backgroundColor = `hsl(60, 0%, ${value}%)`;
+    if (value > 50)
+        light_sensor.style.setProperty('--text-color', 'black')
+    else
+        light_sensor.style.setProperty('--text-color', 'white')
+    light_sensor.setAttribute('value', value + "%");
+}
+
+//motion sensor
+eel.expose(update_motion_sensor);
+function update_motion_sensor(state){
+    if (state)
+        motion_sensor.style.backgroundColor = 'red';
+    else
+        motion_sensor.style.backgroundColor = 'gray';
 }

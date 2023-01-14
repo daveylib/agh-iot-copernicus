@@ -26,7 +26,8 @@ class AppController(CopernicusObserver):
             EventType.BUTTON2: self.__update_button2_state,
             EventType.KNOB: self.__update_knob,
             EventType.LIGHT: self.__update_light_sensor,
-            EventType.TEMPERATURE: self.__update_temperature
+            EventType.TEMPERATURE: self.__update_temperature,
+            EventType.MOTION: self.__update_motion
         }
 
         self.forward_update[EventType.BUTTON1](self.api.get_button1_state())
@@ -34,13 +35,21 @@ class AppController(CopernicusObserver):
         self.forward_update[EventType.KNOB](self.api.get_knob_position())
         self.forward_update[EventType.LIGHT](self.api.get_ambient_light())
         self.forward_update[EventType.TEMPERATURE](self.api.get_temperature())
+        self.forward_update[EventType.MOTION](self.api.get_motion_state())
 
-        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.LIGHT, EventType.TEMPERATURE], self)
+        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.LIGHT, EventType.TEMPERATURE, EventType.MOTION], self)
 
     def update(self, event_type: EventType, event_value: int) -> None:
         print(f"Getting event type {event_type} with value {event_value} directly in the app")
         self.forward_update[event_type](event_value)
 
+    def __update_motion(self, state: bool) -> None:
+        if state:
+            print("Motion detected")
+        else:
+            print("No motion detected")
+        eel.update_motion_sensor(state)
+    
     def __update_light_sensor(self, value: int) -> None:
         print(f"Setting Light Sensor value to {value}")
         eel.update_light_sensor(value)

@@ -125,6 +125,11 @@ body {
     left: calc(50% - 50% * 1.76 / 4);
 }
 
+.dashed-circle>div:nth-child(6) {
+    top: calc(50% - 50% * 1.76 / 2);
+    left: calc(50% + 50% * 1.76 / 4);
+}
+
 .gray-bg {
     background: gray;
 }
@@ -175,6 +180,7 @@ body {
     background: red;
     position: absolute;
     left: 50%;
+    bottom: 0;
     translate: -50%;
 }
 
@@ -188,7 +194,7 @@ body {
     text-align: right;
 }
 
-div[name="Light Sensor"]::before {
+div[name="Light Sensor"]::before, div[name="Motion Sensor"]::before {
     white-space: normal
 }
 
@@ -224,7 +230,9 @@ div[name="Light Sensor"]::before {
     translate: -50% -50%;
 }
 
+
 #light-sensor{
+    --text-color: white;
     background: hsl(60, 100%, 0%);
 }
 
@@ -278,4 +286,14 @@ div[name="Light Sensor"]::before {
 }
 .led2-color-chooser-off{
     background: gray;
+}
+#light-sensor::after{
+    content: attr(value);
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left:50%;
+    translate: -50% -50%;
+    font-size: 0.7em;
+    color: var(--text-color);
 }
