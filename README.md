@@ -18,21 +18,58 @@ directory.
 In UI it's possible to change angle of Dashboard (using Knob), state of Led1 and Led2 (using respectively Button1 and 
 Button2) and color of Led2 (by clicking on it).
 
+### Methods
 `APICopernicus` class contains methods that can be used manually to change or read state of each element of the AGH 
 Copernicus board, such as:
-- `set_dashboard_angle(self, angle: int)`
-- `set_led1_state(self, state: bool)`
-- `set_led2_color(self, red: int, green: int, blue: int)`
+- `set_dashboard_angle(self, angle: int)` - sets dashboard to given angle
+  - parameters:
+    - `angle` - expected values in range [0, 31]
+  - returns `True` if operation was successful, `False` otherwise
+
+
+- `set_led1_state(self, state: bool)` - turns Led1 on and off
+  - parameters:
+    - `state` - `True` turns Led1 on, `False` turns it off
+  - returns `True` if operation was successful, `False` otherwise
+
+
+- `set_led2_color(self, red: int, green: int, blue: int)` - sets color of Led2 to given RGB
+  - parameters: 
+    - `red`, `green`, `blue` - expected value of each in range [0, 3]
+  - returns `True` if operation was successful, `False` otherwise
+
+
 - `get_ambient_light(self)`
+  - returns value of ambient light in range [0, 63]
+
+
 - `get_knob_position(self)`
+  - returns value of the knob position in range [0, 63]
+
+
 - `get_temperature(self)`
+  - returns temperature measured in Celsius in range [10, 41.5]
+
+
 - `get_motion_state(self)`
+  - returns `True` if motion is detected, `False` otherwise
+
+
 - `get_button1_state(self)`
+  - returns `True` if the Button1 is pressed, `False` otherwise
+
+
 - `get_button2_state(self)`
+  - returns `True` if the Button2 is pressed, `False` otherwise
+
 
 ## Example
 |                UI                |                 Copernicus board                 |
 |:--------------------------------:|:------------------------------------------------:|
-| ![Led2 - UI](images/led2_ui.jpg) | ![Led2 - Copernicus](images/led2_copernicus.jpg) |
+| ![Led2 - UI](images/led2_ui.png) | ![Led2 - Copernicus](images/led2_copernicus.jpg) |
 
 
+## Authors
+- Dawid Liberda
+- Mateusz Nowak
+- Bogumiła Papiernik
