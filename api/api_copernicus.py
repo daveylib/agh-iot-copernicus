@@ -21,7 +21,7 @@ class APICopernicus:
 
         Return True if operation was successful, False otherwise
         """
-        self.serial.write(chr(cmd).encode())
+        self.serial.write(cmd.to_bytes(1, "big"))
 
         return True
 
