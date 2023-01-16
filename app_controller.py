@@ -37,7 +37,7 @@ class AppController(CopernicusObserver):
         self.forward_update[EventType.TEMPERATURE](self.api.get_temperature())
         self.forward_update[EventType.MOTION](self.api.get_motion_state())
 
-        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.MOTION], self)
+        self.api.subscribe([EventType.BUTTON1, EventType.BUTTON2, EventType.KNOB, EventType.MOTION, EventType.LIGHT, EventType.TEMPERATURE], self)
 
     def update(self, event_type: EventType, event_value: int) -> None:
         print(f"Getting event type {event_type} with value {event_value} directly in the app")
