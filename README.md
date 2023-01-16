@@ -4,6 +4,8 @@ displays board's current state and allows users to control all of its elements t
 
 ![picture of initial state](images/initial_state.jpg)
 
+More about AGH Copernicus can be found [here](http://galaxy.agh.edu.pl/~tszydlo/copernicus/).
+
 ## Implementation
 Project follows the Observer design pattern. To communicate with the Copernicus board we used the `AppController` class 
 inheriting from `CopernicusObserver`. It contains function `update()` which receives updates from `APICopernicus` about 
